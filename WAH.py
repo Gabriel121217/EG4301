@@ -16,7 +16,7 @@ import time
 GPIO.setmode(GPIO.BCM)
 
                             
-pushpin = 17                                                  
+pushpin = 21                                                  
 GPIO.setup(pushpin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # using the internal Pull up resistor
 
 
