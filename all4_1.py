@@ -13,61 +13,51 @@ import bme280
 #dictionary
 cartridge = {
     "['0x60', '0xbb', '0xe9', '0x55']": "Cartridge A",
+    "['0xfe', '0x43', '0x22', '0x1d']": "Cartridge A"
     "['0xa2', '0x4', '0xdc', '0x51']":"Cartridge B",
-    "['0xe8', '0x96', '0xff', '0xd']": "Cartridge C"
+    "['0xee', '0xed', '0x65', '0x1d']": "Cartridge B",
+    "['0xe8', '0x96', '0xff', '0xd']": "Cartridge C",
+    "['0x53', '0x8f', '0x12', '0x34']": "Cartridge C"
 }
 
 #idk why but i need to define these
 reset_pin = DigitalInOut(board.D6)
 req_pin = DigitalInOut(board.D12)
 
-# Create I2C bus as normal
+# Create I2C
+# bus as normal
 i2c = board.I2C()  # uses board.SCL and board.SDA
 
 # Create the TCA9548A object and give it the I2C bus
 tca = adafruit_tca9548a.TCA9548A(i2c)
 
-# BME280 sensor address (default address)
-address = 0x76
+def nfc_scan():
+    cart = []
+    for i in range(3):
+        pn532 = PN532_I2C(tca[i], debug=False, reset=reset_pin, req=req_pin)
+        pn532.SAM_configuration()
+        output = pn532.read_passive_target(timeout=5)
+        read = str([hex(i) for i in output])
+        if read in cartridge:
+            cart.append(cartridge[read])
+        else:
+            cart.append("Error: Cartridge Not")
+        
+        print(cart)
 
-# Initialize I2C bus
-bus = smbus2.SMBus(1)
+def temp():
+    # BME280 sensor address (default address)
+    address = 0x76
 
-#initialise i2c device
-pn532_1 = PN532_I2C(tca[0], debug=False, reset=reset_pin, req=req_pin)
-pn532_2 = PN532_I2C(tca[1], debug=False, reset=reset_pin, req=req_pin)
-pn532_3 = PN532_I2C(tca[2], debug=False, reset=reset_pin, req=req_pin)
+    # Initialize I2C bus
+    bus = smbus2.SMBus(1)
 
-#makes pn532 able to read stuff
-pn532_1.SAM_configuration()
-pn532_2.SAM_configuration()
-pn532_3.SAM_configuration()
+    # Load calibration parameters
+    calibration_params = bme280.load_calibration_params(bus, address)
+    data = bme280.sample(bus, address, calibration_params)
 
-#collects data
-out_1 = pn532_1.read_passive_target(timeout=255)
-read_1 = str([hex(i) for i in out_1])
+    temperature_celsius = data.temperature
+    pressure = data.pressure
+    humidity = data.humidity
 
-out_2 = pn532_2.read_passive_target(timeout=255)
-read_2 = str([hex(i) for i in out_2])
-
-out_3 = pn532_3.read_passive_target(timeout=255)
-read_3 = str([hex(i) for i in out_3])
-
-print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
-
-
-# BME280 sensor address (default address)
-address = 0x76
-
-# Initialize I2C bus
-bus = smbus2.SMBus(1)
-
-# Load calibration parameters
-calibration_params = bme280.load_calibration_params(bus, address)
-data = bme280.sample(bus, address, calibration_params)
-
-temperature_celsius = data.temperature
-pressure = data.pressure
-humidity = data.humidity
-
-print("Temperature",temperature_celsius,"\nPressure",pressure, "\nhumidity",humidity)
+    print("Temperature",temperature_celsius,"\nPressure",pressure, "\nhumidity",humidity)

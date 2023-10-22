@@ -4,7 +4,4 @@ cartridge = {
     "['0xe8', '0x96', '0xff', '0xd']": "Cartridge C"
 }
 
-print()
-
-#test
-#test2
+print('a')
