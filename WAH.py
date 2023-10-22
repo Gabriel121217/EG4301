@@ -86,3 +86,4 @@ while True:
         humidity = data.humidity
 
         print("Temperature",temperature_celsius,"\nPressure",pressure, "\nhumidity",humidity)
+        time.sleep(3)
