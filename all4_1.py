@@ -77,17 +77,18 @@ GPIO.setup(pushpin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # using the internal Pull
 #servo
 servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
 
-lock_status = False
 
 def lock():
     servo.angle = 0
     lock_status = False
 
 def unlock():
-    servo.angle = 90
+    servo.angle = 180
     lock_status = True
 
+
 lock_status = False
+
 while True:
     if GPIO.input(pushpin) == 0:
         if lock_status:
@@ -98,4 +99,4 @@ while True:
             lock()
             nfc_scan()
             temp()
-            time.sleep(5)
+            time.sleep(1)
