@@ -40,13 +40,12 @@ def nfc_scan():
         pn532 = PN532_I2C(tca[i], debug=False, reset=reset_pin, req=req_pin)
         pn532.SAM_configuration()
         output = pn532.read_passive_target(timeout=5)
-        read = str([hex(i) for i in output])
-        if read in cartridge:
-            cart.append(cartridge[read])
+        if str([hex(i) for i in output]) in cartridge:
+            cart.append(str([hex(i) for i in output]))
         else:
             cart.append("Error: Cartridge Not")
         
-        print(cart)
+    print(cart)
 
 def temp():
     # BME280 sensor address (default address)
