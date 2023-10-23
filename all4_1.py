@@ -77,15 +77,15 @@ GPIO.setup(pushpin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # using the internal Pull
 #servo
 servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
 
-locl_status = False
+lock_status = False
 
 def lock():
     servo.angle = 0
-    lock_status = True
+    lock_status != lock_status
 
 def unlock():
     servo.angle = 90
-    lock_status = False
+    lock_status != lock_status
 
 lock_status = False
 while True:
