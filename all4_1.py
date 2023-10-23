@@ -81,11 +81,11 @@ lock_status = False
 
 def lock():
     servo.angle = 0
-    lock_status != lock_status
+    lock_status = False
 
 def unlock():
     servo.angle = 90
-    lock_status != lock_status
+    lock_status = True
 
 lock_status = False
 while True:
