@@ -79,11 +79,11 @@ servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
 
 
 def lock():
-    servo.angle = 90
+    servo.angle = -90
 
 
 def unlock():
-    servo.angle = -90
+    servo.angle = 90
 
 
 
