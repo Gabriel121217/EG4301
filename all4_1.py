@@ -88,6 +88,7 @@ def unlock():
 
 
 status = False
+servo.angle = 90
 
 while True:
     if GPIO.input(pushpin) == 0:
