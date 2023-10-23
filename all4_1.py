@@ -89,7 +89,8 @@ def unlock():
 
 lock_status = False
 while True:
-    
+    print(GPIO.input(pushpin))
+    print(lock_status)
     if GPIO.input(pushpin) == 0:
         if lock_status:
             unlock()
