@@ -80,11 +80,11 @@ servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
 
 def lock():
     servo.angle = 90
-    status = False
+    status = True
 
 def unlock():
     servo.angle = -90
-    status = True
+    status = False
 
 
 status = False
@@ -94,13 +94,11 @@ while True:
         if status:
             print(status)
             unlock()
-            status = False
-            time.sleep(3)
+            time.sleep(1)
         else:
             print(status)
             lock()
             nfc_scan()
             temp()
-            status = True
-            time.sleep(3)
+            time.sleep(1)
 
