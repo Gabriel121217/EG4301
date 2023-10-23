@@ -89,13 +89,13 @@ def unlock():
 
 lock_status = False
 while True:
-    print(GPIO.input(pushpin))
-    print(lock_status)
     if GPIO.input(pushpin) == 0:
         if lock_status:
+            print(lock_status)
             unlock()
         else:
+            print(lock_status)
             lock()
             nfc_scan()
             temp()
-            time.sleep(3)
+            time.sleep(5)
