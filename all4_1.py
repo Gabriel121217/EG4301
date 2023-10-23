@@ -40,8 +40,10 @@ def nfc_scan():
         pn532 = PN532_I2C(tca[i], debug=False, reset=reset_pin, req=req_pin)
         pn532.SAM_configuration()
         output = pn532.read_passive_target(timeout=5)
-        if str([hex(i) for i in output]) in cartridge:
-            cart.append(str([hex(i) for i in output]))
+        if output == "None":
+            cart.append("Error: No Cartridge detected")
+        elif str([hex(i) for i in output]) in cartridge:
+            cart.append()
         else:
             cart.append("Error: Cartridge Not")
         
