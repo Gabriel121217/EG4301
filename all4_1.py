@@ -86,6 +86,7 @@ def unlock():
     servo.angle = -90
 
 
+
 status = False
 
 while True:
@@ -101,5 +102,5 @@ while True:
             nfc_scan()
             temp()
             status = True
-            time.sleep(1)
+            time.sleep(3)
 
