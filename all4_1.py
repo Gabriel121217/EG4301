@@ -11,6 +11,8 @@ import smbus2
 import bme280
 import RPi.GPIO as GPIO
 import time
+from gpiozero import AngularServo
+from time import sleep
 
 #dictionary
 cartridge = {
@@ -44,7 +46,7 @@ def nfc_scan():
             cart.append("Error: No Cartridge detected")
         elif str([hex(i) for i in output]) in cartridge:
             read = str([hex(i) for i in output])
-            cart.append(read)
+            cart.append(cartridge[read])
         else:
             cart.append("Error: Cartridge Not")
         
@@ -67,13 +69,33 @@ def temp():
 
     print("Temperature",temperature_celsius,"\nPressure",pressure, "\nhumidity",humidity)
 
-# Set the GPIO mode to BCM
+# switch
 GPIO.setmode(GPIO.BCM)                
 pushpin = 21                                                  
 GPIO.setup(pushpin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # using the internal Pull up resistor
 
+#servo
+servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.0023)
+
+locl_status = False
+
+def lock():
+    servo.angle = 0
+    lock_status = True
+
+def unlock():
+    servo.angle = 90
+    lock_status = False
+
+lock_status = False
 while True:
+    
     if GPIO.input(pushpin) == 0:
-        nfc_scan()
-        temp()
-        time.sleep(3)
+        if lock_status == True:
+            unlock()
+        else:
+            lock()
+            nfc_scan()
+            temp()
+            
+    time.sleep(3)
