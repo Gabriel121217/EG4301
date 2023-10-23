@@ -75,7 +75,7 @@ pushpin = 21
 GPIO.setup(pushpin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # using the internal Pull up resistor
 
 #servo
-servo = AngularServo(18, min_pulse_width=0.0010, max_pulse_width=0.0030)
+servo = AngularServo(18, min_pulse_width=0.0006, max_pulse_width=0.00250)
 
 
 def lock():
