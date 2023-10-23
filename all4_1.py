@@ -91,7 +91,7 @@ lock_status = False
 while True:
     
     if GPIO.input(pushpin) == 0:
-        if lock_status == True:
+        if lock_status:
             unlock()
         else:
             lock()
