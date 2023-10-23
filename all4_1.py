@@ -95,10 +95,12 @@ while True:
             print(status)
             unlock()
             status = False
+            time.sleep(3)
         else:
             print(status)
             lock()
             nfc_scan()
             temp()
             status = True
+            time.sleep(3)
 
