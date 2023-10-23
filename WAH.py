@@ -60,13 +60,13 @@ pn532_3.SAM_configuration()
 
 while True:
     if GPIO.input(pushpin) == 0:
-        out_1 = pn532_1.read_passive_target(timeout=255)
+        out_1 = pn532_1.read_passive_target(timeout=128)
         read_1 = str([hex(i) for i in out_1])
 
-        out_2 = pn532_2.read_passive_target(timeout=255)
+        out_2 = pn532_2.read_passive_target(timeout=128)
         read_2 = str([hex(i) for i in out_2])
 
-        out_3 = pn532_3.read_passive_target(timeout=255)
+        out_3 = pn532_3.read_passive_target(timeout=128)
         read_3 = str([hex(i) for i in out_3])
 
         print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])

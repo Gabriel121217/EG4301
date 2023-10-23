@@ -9,11 +9,13 @@ from digitalio import DigitalInOut
 import time
 import smbus2
 import bme280
+import RPi.GPIO as GPIO
+import time
 
 #dictionary
 cartridge = {
     "['0x60', '0xbb', '0xe9', '0x55']": "Cartridge A",
-    "['0xfe', '0x43', '0x22', '0x1d']": "Cartridge A"
+    "['0xfe', '0x43', '0x22', '0x1d']": "Cartridge A",
     "['0xa2', '0x4', '0xdc', '0x51']":"Cartridge B",
     "['0xee', '0xed', '0x65', '0x1d']": "Cartridge B",
     "['0xe8', '0x96', '0xff', '0xd']": "Cartridge C",
@@ -30,6 +32,7 @@ i2c = board.I2C()  # uses board.SCL and board.SDA
 
 # Create the TCA9548A object and give it the I2C bus
 tca = adafruit_tca9548a.TCA9548A(i2c)
+
 
 def nfc_scan():
     cart = []
@@ -61,3 +64,14 @@ def temp():
     humidity = data.humidity
 
     print("Temperature",temperature_celsius,"\nPressure",pressure, "\nhumidity",humidity)
+
+# Set the GPIO mode to BCM
+GPIO.setmode(GPIO.BCM)                
+pushpin = 21                                                  
+GPIO.setup(pushpin, GPIO.IN, pull_up_down=GPIO.PUD_UP) # using the internal Pull up resistor
+
+while True:
+    if GPIO.input(pushpin) == 0:
+        nfc_scan()
+        temp()
+        time.sleep(3)
