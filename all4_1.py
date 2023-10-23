@@ -93,15 +93,16 @@ servo.angle = 90
 while True:
     if GPIO.input(pushpin) == 0:
         if status:
-            print(status)
             unlock()
             status = False
+            print("Unlock")
             time.sleep(1)
         else:
-            print(status)
+            print("Locking...")
             lock()
             nfc_scan()
             temp()
             status = True
             time.sleep(1)
+            print("Locked")
 
