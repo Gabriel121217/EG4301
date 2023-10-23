@@ -99,9 +99,9 @@ while True:
             time.sleep(1)
         else:
             print("Locking...")
-            lock()
             nfc_scan()
             temp()
+            lock()
             status = True
             time.sleep(1)
             print("Locked")
