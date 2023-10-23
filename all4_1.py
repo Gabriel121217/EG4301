@@ -98,5 +98,4 @@ while True:
             lock()
             nfc_scan()
             temp()
-            
-    time.sleep(3)
+            time.sleep(3)
