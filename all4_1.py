@@ -94,9 +94,11 @@ while True:
         if status:
             print(status)
             unlock()
+            status = False
         else:
             print(status)
             lock()
             nfc_scan()
             temp()
+            status = True
 
