@@ -20,7 +20,6 @@ from time import sleep
 dynamodb = boto3.resource('dynamodb')
 Userlink = "Ryan Tan Cheng Lee"
 CartridgeIDtable = dynamodb.Table('4301_Cartridge').get_item(Key={"Cartridge number":"CartridgeIndex"}).get("Item")
-print(CartridgeIDtable)
 A= CartridgeIDtable.get("A")
 B = CartridgeIDtable.get("B")
 C = CartridgeIDtable.get("C")
