@@ -43,7 +43,8 @@ def nfc_scan():
         if str(output) == "None":
             cart.append("Error: No Cartridge detected")
         elif str([hex(i) for i in output]) in cartridge:
-            cart.append(str([hex(i) for i in output]))
+            read = str([hex(i) for i in output])
+            cart.append(read)
         else:
             cart.append("Error: Cartridge Not")
         
