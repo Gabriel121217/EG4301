@@ -27,6 +27,7 @@ cartridge = {
 #idk why but i need to define these
 reset_pin = DigitalInOut(board.D6)
 req_pin = DigitalInOut(board.D12)
+#testtest
 
 # Create I2C
 # bus as normal
