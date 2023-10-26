@@ -149,6 +149,7 @@ while True:
 
                 cartridgetype = CartridgeIDtable.get(i).get("Cartridge Type")
                 cartridge = CartridgeIDtable.get(i).get("Cartridge Type")
+                print(cartridge)
 
 
                 for category, items in cartridge.items():
