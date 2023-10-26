@@ -149,7 +149,7 @@ while True:
 
 
                 cartridgetype = CartridgeIDtable.get(i).get("Cartridge Type")
-                cartridge = CartridgeIDtable.get(i).get("Cartridge Type")
+                cartridge = CartridgeIDtable.get("CartridgeIndex").get(cartridgetype)
                 print(cartridge)
 
 
