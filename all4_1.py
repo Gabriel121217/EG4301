@@ -25,30 +25,30 @@ cartr = dynamodb.Table('4301_Cartridge')
 CartridgeIDtable = cartr.get_item(Key={"Cartridge number":"CartridgeIndex"}).get("Item")
 Supp = dynamodb.Table('eg4301_patient')
 
-if st.button("confirm"):
-    if state.patientresup and state.containerresup:
-        Supplytable = Supp.get_item(Key={"UniqueID": state.patientresup}).get("Item")
-        cartridge = CartridgeIDtable.get(state.containerresup)
-        for category, items in cartridge.items():
-            if category not in Supplytable:
-                Supplytable[category] = {}  # If the category doesn't exist in dict1, add it
+# if st.button("confirm"):
+#     if state.patientresup and state.containerresup:
+#         Supplytable = Supp.get_item(Key={"UniqueID": state.patientresup}).get("Item")
+#         cartridge = CartridgeIDtable.get(state.containerresup)
+#         for category, items in cartridge.items():
+#             if category not in Supplytable:
+#                 Supplytable[category] = {}  # If the category doesn't exist in dict1, add it
 
-            for item, value in items.items():
-                if item in Supplytable[category]:
-                    if value not in ["None","Low","Moderate","High"]:
-                        # Add the values if not "None"
-                        Supplytable[category][item] = str(int(Supplytable[category][item]) + int(value))
-                    else:
-                        # Change "None" to "High"
-                        Supplytable[category][item] = value
-                else:
-                    # If the item doesn't exist in dict1, add it with the value from dict2
-                    Supplytable[category][item] = value
+#             for item, value in items.items():
+#                 if item in Supplytable[category]:
+#                     if value not in ["None","Low","Moderate","High"]:
+#                         # Add the values if not "None"
+#                         Supplytable[category][item] = str(int(Supplytable[category][item]) + int(value))
+#                     else:
+#                         # Change "None" to "High"
+#                         Supplytable[category][item] = value
+#                 else:
+#                     # If the item doesn't exist in dict1, add it with the value from dict2
+#                     Supplytable[category][item] = value
 
-        Supp.put_item(Item=Supplytable)
-    else:
+#         Supp.put_item(Item=Supplytable)
+#     else:
         
-        st.error("empty field detected")
+#         st.error("empty field detected")
 #dictionary
 cartridge = {
     "['0x60', '0xbb', '0xe9', '0x55']": "Cartridge A",
