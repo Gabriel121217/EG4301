@@ -169,7 +169,7 @@ while True:
                             Supplytable[category][item] = value
 
                 Supp.put_item(Item=Supplytable)
-                print("Locked")
+            print("Locked")
 
             
 
