@@ -88,6 +88,7 @@ def nfc_scan():
             cart.append("Error: Cartridge Not")
         
     print(cart)
+    return(cart)
 
 def temp():
     # BME280 sensor address (default address)
@@ -137,7 +138,7 @@ while True:
             time.sleep(1)
         else:
             print("Locking...")
-            nfc_scan()
+            cart=nfc_scan()
             temp()
             lock()
             status = True
