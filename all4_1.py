@@ -145,7 +145,10 @@ while True:
             print("Locked")
             Supplytable = Supp.get_item(Key={"UniqueID": "Ryan Tan Cheng Lee"}).get("Item")
             for i in cart:
-                cartridge = CartridgeIDtable.get(i)
+
+
+                cartridgetype = CartridgeIDtable.get(i).get("Cartridge Type")
+                cartridge = CartridgeIDtable.get(i).get("Cartridge Type")
 
 
                 for category, items in cartridge.items():
