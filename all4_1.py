@@ -24,7 +24,8 @@ dynamodb = boto3.resource('dynamodb')
 cartr = dynamodb.Table('4301_Cartridge')
 CartridgeIDtable = cartr.get_item(Key={"Cartridge number":"CartridgeIndex"}).get("Item")
 Supp = dynamodb.Table('eg4301_patient')
-
+def getCartType(strlist):
+    return CartridgeIDtable.get(strlist).get("Cartridge Type")
 # if st.button("confirm"):
 #     if state.patientresup and state.containerresup:
 #         Supplytable = Supp.get_item(Key={"UniqueID": state.patientresup}).get("Item")
@@ -147,11 +148,10 @@ while True:
             Supplytable = Supp.get_item(Key={"UniqueID": "Ryan Tan Cheng Lee"}).get("Item")
             for i in cart:
 
+                cartType=getCartType(i)
 
-                cartridgetype = CartridgeIDtable.get(i).get("Cartridge Type")
-                cartridge = CartridgeIDtable.get("CartridgeIndex").get(cartridgetype)
+                cartridge = CartridgeIDtable.get(cartType)
                 print(cartridge)
-
 
                 for category, items in cartridge.items():
                     if category not in Supplytable:
