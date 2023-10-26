@@ -14,6 +14,41 @@ import time
 from gpiozero import AngularServo
 from time import sleep
 
+from dotenv import load_dotenv
+load_dotenv()
+import boto3
+
+
+
+dynamodb = boto3.resource('dynamodb')
+cartr = dynamodb.Table('4301_Cartridge')
+CartridgeIDtable = cartr.get_item(Key={"Cartridge number":"CartridgeIndex"}).get("Item")
+Supp = dynamodb.Table('eg4301_patient')
+
+if st.button("confirm"):
+    if state.patientresup and state.containerresup:
+        Supplytable = Supp.get_item(Key={"UniqueID": state.patientresup}).get("Item")
+        cartridge = CartridgeIDtable.get(state.containerresup)
+        for category, items in cartridge.items():
+            if category not in Supplytable:
+                Supplytable[category] = {}  # If the category doesn't exist in dict1, add it
+
+            for item, value in items.items():
+                if item in Supplytable[category]:
+                    if value not in ["None","Low","Moderate","High"]:
+                        # Add the values if not "None"
+                        Supplytable[category][item] = str(int(Supplytable[category][item]) + int(value))
+                    else:
+                        # Change "None" to "High"
+                        Supplytable[category][item] = value
+                else:
+                    # If the item doesn't exist in dict1, add it with the value from dict2
+                    Supplytable[category][item] = value
+
+        Supp.put_item(Item=Supplytable)
+    else:
+        
+        st.error("empty field detected")
 #dictionary
 cartridge = {
     "['0x60', '0xbb', '0xe9', '0x55']": "Cartridge A",
@@ -35,6 +70,7 @@ i2c = board.I2C()  # uses board.SCL and board.SDA
 
 # Create the TCA9548A object and give it the I2C bus
 tca = adafruit_tca9548a.TCA9548A(i2c)
+
 
 
 def nfc_scan():
@@ -92,6 +128,7 @@ status = False
 servo.angle = 90
 
 while True:
+    cart=[]
     if GPIO.input(pushpin) == 0:
         if status:
             unlock()
@@ -106,4 +143,28 @@ while True:
             status = True
             time.sleep(1)
             print("Locked")
+            Supplytable = Supp.get_item(Key={"UniqueID": "Ryan Tan Cheng Lee"}).get("Item")
+            for i in cart:
+                cartridge = CartridgeIDtable.get(i)
+
+
+                for category, items in cartridge.items():
+                    if category not in Supplytable:
+                        Supplytable[category] = {}  # If the category doesn't exist in dict1, add it
+
+                    for item, value in items.items():
+                        if item in Supplytable[category]:
+                            if value not in ["None","Low","Moderate","High"]:
+                                # Add the values if not "None"
+                                Supplytable[category][item] = str(int(Supplytable[category][item]) + int(value))
+                            else:
+                                # Change "None" to "High"
+                                Supplytable[category][item] = value
+                        else:
+                            # If the item doesn't exist in dict1, add it with the value from dict2
+                            Supplytable[category][item] = value
+
+                Supp.put_item(Item=Supplytable)
+
+            
 
