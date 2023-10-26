@@ -142,7 +142,7 @@ while True:
             lock()
             status = True
             time.sleep(1)
-            print("Locked")
+            print(cart)
             Supplytable = Supp.get_item(Key={"UniqueID": "Ryan Tan Cheng Lee"}).get("Item")
             for i in cart:
 
@@ -169,6 +169,7 @@ while True:
                             Supplytable[category][item] = value
 
                 Supp.put_item(Item=Supplytable)
+                print("Locked")
 
             
 
