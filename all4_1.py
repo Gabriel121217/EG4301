@@ -150,6 +150,6 @@ while True:
                             else:
                                 # If the item doesn't exist in dict1, add it with the value from dict2
                                 Supplytable[category][item] = value
-            # print("final:",Supplytable)
+            print("final:",Supplytable)
             Supp.put_item(Item=Supplytable)
             print("Locked")
