@@ -139,16 +139,16 @@ while True:
                         if category not in Supplytable:
                             Supplytable[category] = {}  # If the category doesn't exist in dict1, add it
                     for item, value in items.items():
-                                            if item in Supplytable[category]:
-                                                if value not in ["None","Low","Moderate","High"]:
-                                                    # Add the values if not "None"
-                                                    Supplytable[category][item] = str(int(Supplytable[category][item]) + int(value))
-                                                else:
-                                                    # Change "None" to "High"
-                                                    Supplytable[category][item] = value
-                                            else:
-                                                # If the item doesn't exist in dict1, add it with the value from dict2
-                                                Supplytable[category][item] = value
+                        if item in Supplytable[category]:
+                            if value not in ["None","Low","Moderate","High"]:
+                                # Add the values if not "None"
+                                Supplytable[category][item] = str(int(Supplytable[category][item]) + int(value))
+                            else:
+                                # Change "None" to "High"
+                                Supplytable[category][item] = value
+                        else:
+                            # If the item doesn't exist in dict1, add it with the value from dict2
+                            Supplytable[category][item] = value
             print("final:",Supplytable)
             Supp.put_item(Item=Supplytable)
             print("Locked")
