@@ -128,7 +128,7 @@ while True:
             status = True
             time.sleep(1)
             for RFIDcard in cart:
-                i=cartidtotype.get_item(Key={"Cartridge number":i}).get("Item")
+                i=cartidtotype.get_item(Key={"Cartridge number":RFIDcard}).get("Item")
 
                 for category, items in i.items():
                     if category not in Supplytable:
@@ -144,5 +144,5 @@ while True:
                             else:
                                 # If the item doesn't exist in dict1, add it with the value from dict2
                                 Supplytable[category][item] = value
-                Supp.put_item(Item=Supplytable)
-                print("Locked")
+            Supp.put_item(Item=Supplytable)
+            print("Locked")
