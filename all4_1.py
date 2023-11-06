@@ -131,10 +131,10 @@ while True:
             time.sleep(1)
             for RFIDcard in cart:
                 cartType = cartidtotype.get_item(Key={"Cartridge number": RFIDcard}).get("Item").get("Cartridge Type")
-                print("whether fullstock:",cartidtotype.get_item(Key={"Cartridge number": RFIDcard}).get("Item").get("FullStock"))
+                # print("whether fullstock:",cartidtotype.get_item(Key={"Cartridge number": RFIDcard}).get("Item").get("FullStock"))
                 if cartidtotype.get_item(Key={"Cartridge number": RFIDcard}).get("Item").get("FullStock"):
                     i = CartridgeIDtable.get(cartType)
-                    print("i is",i)
+                    # print("i is",i)
                     for category, items in i.items():
                         if category not in Supplytable:
                             Supplytable[category] = {}  # If the category doesn't exist in dict1, add it
@@ -142,6 +142,7 @@ while True:
                         if item in Supplytable[category]:
                             if value not in ["None","Low","Moderate","High"]:
                                 # Add the values if not "None"
+                                print(value)
                                 Supplytable[category][item] = str(int(Supplytable[category][item]) + int(value))
                             else:
                                 # Change "None" to "High"
@@ -149,6 +150,6 @@ while True:
                         else:
                             # If the item doesn't exist in dict1, add it with the value from dict2
                             Supplytable[category][item] = value
-            print("final:",Supplytable)
+            # print("final:",Supplytable)
             Supp.put_item(Item=Supplytable)
             print("Locked")
