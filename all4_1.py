@@ -129,23 +129,23 @@ while True:
             lock()
             status = True
             time.sleep(1)
-            for RFIDcard in cart:
-                print(RFIDcard)
-                i=cartidtotype.get_item(Key={"Cartridge number":RFIDcard}).get("Item")
-                print(i)
-                for category, items in i.items():
-                    if category not in Supplytable:
-                        Supplytable[category] = {}  # If the category doesn't exist in dict1, add it
-                        for item, value in items.items():
-                            if item in Supplytable[category]:
-                                if value not in ["None","Low","Moderate","High"]:
-                                    # Add the values if not "None"
-                                    Supplytable[category][item] = str(int(Supplytable[category][item]) + int(value))
-                                else:
-                                    # Change "None" to "High"
-                                    Supplytable[category][item] = value
-                            else:
-                                # If the item doesn't exist in dict1, add it with the value from dict2
-                                Supplytable[category][item] = value
-            Supp.put_item(Item=Supplytable)
+            # for RFIDcard in cart:
+            #     print(RFIDcard)
+            #     i=cartidtotype.get_item(Key={"Cartridge number":RFIDcard}).get("Item")
+            #     print(i)
+            #     for category, items in i.items():
+            #         if category not in Supplytable:
+            #             Supplytable[category] = {}  # If the category doesn't exist in dict1, add it
+            #             for item, value in items.items():
+            #                 if item in Supplytable[category]:
+            #                     if value not in ["None","Low","Moderate","High"]:
+            #                         # Add the values if not "None"
+            #                         Supplytable[category][item] = str(int(Supplytable[category][item]) + int(value))
+            #                     else:
+            #                         # Change "None" to "High"
+            #                         Supplytable[category][item] = value
+            #                 else:
+            #                     # If the item doesn't exist in dict1, add it with the value from dict2
+            #                     Supplytable[category][item] = value
+            # Supp.put_item(Item=Supplytable)
             print("Locked")
