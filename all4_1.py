@@ -19,17 +19,6 @@ load_dotenv()
 import boto3
 
 
-dynamodb = boto3.resource('dynamodb')
-cartidtotype=dynamodb.Table('4301_Cartridge')
-CartridgeIDtable = dynamodb.Table('4301_Cartridge').get_item(Key={"Cartridge number":"CartridgeIndex"}).get("Item")   #get what is in each table
-Userlink = "Gabriel Wong Kong Yee"
-A = CartridgeIDtable.get("A")   #what is in A
-B = CartridgeIDtable.get("B")   #what is in B
-C = CartridgeIDtable.get("C")   #what is in C
-D = CartridgeIDtable.get("D")   #what is in D
-
-Supp = dynamodb.Table('eg4301_patient')          #get what is currently in the HUB system
-Supplytable = Supp.get_item(Key={"UniqueID":Userlink}).get("Item")    
 
 
 
@@ -115,6 +104,14 @@ status = False
 servo.angle = 90
 
 while True:
+    dynamodb = boto3.resource('dynamodb')
+    cartidtotype=dynamodb.Table('4301_Cartridge')
+    CartridgeIDtable = dynamodb.Table('4301_Cartridge').get_item(Key={"Cartridge number":"CartridgeIndex"}).get("Item")   #get what is in each table
+    Userlink = "Gabriel Wong Kong Yee"
+
+    Supp = dynamodb.Table('eg4301_patient')          #get what is currently in the HUB system
+    Supplytable = Supp.get_item(Key={"UniqueID":Userlink}).get("Item")    
+
     cart=[]
     if GPIO.input(pushpin) == 0:
         if status:
