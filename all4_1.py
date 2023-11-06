@@ -59,6 +59,7 @@ tca = adafruit_tca9548a.TCA9548A(i2c)
 
 def nfc_scan():
     cart = []
+    answer= []
     for i in range(3):
         pn532 = PN532_I2C(tca[i], debug=False, reset=reset_pin, req=req_pin)
         pn532.SAM_configuration()
@@ -67,11 +68,12 @@ def nfc_scan():
             cart.append("Error: No Cartridge detected")
         elif str([hex(i) for i in output]) in cartridge:
             read = str([hex(i) for i in output])
+            answer.append(read)
             cart.append(cartridge[read])
         else:
             cart.append("Error: Cartridge Not")
         
-    print(cart)
+    print(answer)
     return(cart)
 
 def temp():
