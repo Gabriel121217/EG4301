@@ -128,8 +128,9 @@ while True:
             status = True
             time.sleep(1)
             for RFIDcard in cart:
+                print(RFIDcard)
                 i=cartidtotype.get_item(Key={"Cartridge number":RFIDcard}).get("Item")
-
+                print(i)
                 for category, items in i.items():
                     if category not in Supplytable:
                         Supplytable[category] = {}  # If the category doesn't exist in dict1, add it
