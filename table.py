@@ -26,10 +26,10 @@ def stop():
 
 while (True):    
     moveup()
-    time.sleep(2)
+    sleep(2)
     stop()
-    time.sleep(1)
+    sleep(1)
     movedown()
-    time.sleep(2)
+    sleep(2)
     stop()
 
