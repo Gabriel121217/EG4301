@@ -20,6 +20,10 @@ def movedown():
 
 def stop():
     import RPi.GPIO as GPIO
+    GPIO.setup(23, GPIO.OUT)
+    GPIO.setup(24, GPIO.OUT)
+    GPIO.output(23, 0)
+    GPIO.output(24, 0)
     GPIO.cleanup()
 
 def process_input(action):
@@ -37,3 +41,4 @@ while True:
         break
     else:
         process_input(user_input)
+        stop()
