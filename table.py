@@ -6,10 +6,10 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(14, GPIO.OUT)
 
 def set_gpio_high():
-    GPIO.output(14, GPIO.HIGH)
+    GPIO.output(14,1)
 
 def set_gpio_low():
-    GPIO.output(14, GPIO.LOW)
+    GPIO.output(14,0)
 
 # Example usage
 for i in range(10):
