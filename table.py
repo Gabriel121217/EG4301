@@ -10,19 +10,19 @@ GPIO.setwarnings(False)
 #by the number directly after the word GPIO. A good Pin Out Resource can be found here https://pinout.xyz/
 GPIO.setmode(GPIO.BCM)
 #This sets up the GPIO 18 pin as an output pin
-up = GPIO.setup(14, GPIO.OUT)
-down = GPIO.setup(15, GPIO.OUT)
+GPIO.setup(14, GPIO.OUT)
+GPIO.setup(15, GPIO.OUT)
 
 
 def moveup():
-    GPIO.output(up, 1)
+    GPIO.output(14, 1)
 
 def movedown():
-    GPIO.output(down, 1)
+    GPIO.output(15, 1)
 
 def stop():
-    GPIO.output(up, 0)
-    GPIO.output(down, 0)
+    GPIO.output(14, 0)
+    GPIO.output(15, 0)
 
 while (True):    
     moveup()
