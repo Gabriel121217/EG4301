@@ -11,6 +11,7 @@ GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
 #This sets up the GPIO 18 pin as an output pin
 GPIO.setup(23, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
 
 while (True):    
     
@@ -22,3 +23,23 @@ while (True):
     GPIO.output(23, 0)
     #Wait 1 Seconds
     sleep(1)
+
+def moveup():
+    GPIO.output(23, 1)
+
+def movedown():
+    GPIO.output(24, 1)
+
+def stop():
+    GPIO.output(23, 0)
+    GPIO.output(24, 0)
+
+
+for i in range(20):
+    moveup()
+    sleep(2)
+    stop()
+    sleep(0.5)
+    movedown()
+    sleep(2)
+    stop()
