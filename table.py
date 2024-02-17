@@ -41,4 +41,4 @@ while True:
         break
     else:
         process_input(user_input)
-        stop()
+
