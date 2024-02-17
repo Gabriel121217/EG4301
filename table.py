@@ -24,15 +24,6 @@ def stop():
     import RPi.GPIO as GPIO
     GPIO.cleanup()
 
-for i in range(20):
-    moveup()
-    sleep(2)
-    stop()
-    sleep(0.5)
-    movedown()
-    sleep(2)
-    stop()
-
 
 while True:
     command = input("What do I do?:")
