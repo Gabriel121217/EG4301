@@ -36,10 +36,10 @@ def process_input(action):
         stop()
     
 while True:
+    stop()
     user_input = input("Enter 'up', 'down', or 'stop': ").lower()
     if user_input == 'stop':
         stop()
-        break
     else:
         process_input(user_input)
 
