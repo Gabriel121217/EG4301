@@ -13,17 +13,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(23, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
 
-while (True):    
-    
-    #This Turns Relay Off. Brings Voltage to Max GPIO can output ~3.3V
-    GPIO.output(23, 1)
-    #Wait 1 Seconds
-    sleep(1)
-    #Turns Relay On. Brings Voltage to Min GPIO can output ~0V.
-    GPIO.output(23, 0)
-    #Wait 1 Seconds
-    sleep(1)
-
 def moveup():
     GPIO.output(23, 1)
 
