@@ -25,11 +25,11 @@ def stop():
     GPIO.output(24, 0)
 
 while (True):    
-    moveup()
-    sleep(2)
-    stop()
-    sleep(1)
-    # movedown()
+    # moveup()
     # sleep(2)
     # stop()
+    sleep(1)
+    movedown()
+    sleep(2)
+    stop()
 
