@@ -24,10 +24,18 @@ def stop():
     import RPi.GPIO as GPIO
     GPIO.cleanup()
 
-
-while True:
-    command = input("What do I do?:")
-    if command == 'up':
+def process_input(action):
+    if action == 'up':
         moveup()
-    elif command == 'down':
+    elif action == 'down':
         movedown()
+    elif action == 'stop':
+        stop()
+    
+while True:
+    user_input = input("Enter 'up', 'down', or 'stop': ").lower()
+    if user_input == 'stop':
+        stop()
+        break
+    else:
+        process_input(user_input)
