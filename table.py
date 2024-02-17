@@ -29,7 +29,7 @@ while (True):
     sleep(2)
     stop()
     sleep(1)
-    movedown()
-    sleep(2)
-    stop()
+    # movedown()
+    # sleep(2)
+    # stop()
 
