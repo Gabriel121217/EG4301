@@ -10,15 +10,15 @@ GPIO.setwarnings(False)
 #by the number directly after the word GPIO. A good Pin Out Resource can be found here https://pinout.xyz/
 GPIO.setmode(GPIO.BCM)
 #This sets up the GPIO 18 pin as an output pin
-GPIO.setup(14, GPIO.OUT)
+GPIO.setup(23, GPIO.OUT)
 
 while (True):    
     
     #This Turns Relay Off. Brings Voltage to Max GPIO can output ~3.3V
-    GPIO.output(14, 1)
+    GPIO.output(23, 1)
     #Wait 1 Seconds
     sleep(1)
     #Turns Relay On. Brings Voltage to Min GPIO can output ~0V.
-    GPIO.output(14, 0)
+    GPIO.output(23, 0)
     #Wait 1 Seconds
     sleep(1)
