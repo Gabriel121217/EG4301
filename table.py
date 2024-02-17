@@ -15,14 +15,14 @@ down = GPIO.setup(15, GPIO.OUT)
 
 
 def moveup():
-    GPIO.output(up, GPIO.1)
+    GPIO.output(up, 1)
 
 def movedown():
-    GPIO.output(down, GPIO.1)
+    GPIO.output(down, 1)
 
 def stop():
-    GPIO.output(up, GPIO.0)
-    GPIO.output(down, GPIO.0)
+    GPIO.output(up, 0)
+    GPIO.output(down, 0)
 
 while (True):    
     moveup()
