@@ -3,6 +3,7 @@ from time import sleep
 def moveup():
     import RPi.GPIO as GPIO
     from time import sleep
+    stop()
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(23, GPIO.OUT)
@@ -11,6 +12,7 @@ def moveup():
 def movedown():
     import RPi.GPIO as GPIO
     from time import sleep
+    stop()
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(24, GPIO.OUT)
