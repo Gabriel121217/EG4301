@@ -17,6 +17,7 @@ def movedown():
     GPIO.output(24, 1)
 
 def stop():
+    import RPi.GPIO as GPIO
     GPIO.cleanup()
 
 for i in range(20):
