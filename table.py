@@ -27,6 +27,8 @@ def stop():
     GPIO.output(24, 0)
     GPIO.cleanup()
 
+    
+
 def process_input(action):
     if action == 'up':
         moveup()
