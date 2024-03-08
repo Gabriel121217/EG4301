@@ -45,25 +45,27 @@ i2c = board.I2C()  # uses board.SCL and board.SDA
 # Create the TCA9548A object and give it the I2C bus
 tca = adafruit_tca9548a.TCA9548A(i2c)
 
+#initialise i2c device
+pn532_1 = PN532_I2C(tca[0], debug=False, reset=reset_pin, req=req_pin)
+pn532_2 = PN532_I2C(tca[1], debug=False, reset=reset_pin, req=req_pin)
+pn532_3 = PN532_I2C(tca[2], debug=False, reset=reset_pin, req=req_pin)
 
+#makes pn532 able to read stuff
+pn532_1.SAM_configuration()
+pn532_2.SAM_configuration()
+pn532_3.SAM_configuration()
 
 def nfc_scan():
-    cart = []
-    answer= []
-    for i in range(3):
-        pn532 = PN532_I2C(tca[i], debug=False, reset=reset_pin, req=req_pin)
-        pn532.SAM_configuration()
-        output = pn532.read_passive_target(timeout=5)
-        if str(output) == "None":
-            cart.append("Error: No Cartridge detected")
-        elif str([hex(i) for i in output]) in cartridge:
-            read = str([hex(i) for i in output])
-            answer.append(cartridge[read])
-            cart.append(read)
-        else:
-            cart.append("Error: Cartridge Not")
-        
-    print(answer)
+    out_1 = pn532_1.read_passive_target(timeout=128)
+    read_1 = str([hex(i) for i in out_1])
+
+    out_2 = pn532_2.read_passive_target(timeout=128)
+    read_2 = str([hex(i) for i in out_2])
+
+    out_3 = pn532_3.read_passive_target(timeout=128)
+    read_3 = str([hex(i) for i in out_3])
+
+    print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
         
 
 def temp():
