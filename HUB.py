@@ -125,10 +125,10 @@ def process_input(action):
     
 while True:
     user_input = input("Enter 'scan', 'temp', 'up', 'down', or 'stop': ").lower()
-    sleep(2)
     if user_input == 'stop':
         stop()
     else:
         stop()
         process_input(user_input)
+        sleep(2)
 
