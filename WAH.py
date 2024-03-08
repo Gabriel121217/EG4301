@@ -59,31 +59,30 @@ pn532_3.SAM_configuration()
 #collects data
 
 while True:
-    if GPIO.input(pushpin) == 0:
-        out_1 = pn532_1.read_passive_target(timeout=128)
-        read_1 = str([hex(i) for i in out_1])
+    out_1 = pn532_1.read_passive_target(timeout=128)
+    read_1 = str([hex(i) for i in out_1])
 
-        out_2 = pn532_2.read_passive_target(timeout=128)
-        read_2 = str([hex(i) for i in out_2])
+    out_2 = pn532_2.read_passive_target(timeout=128)
+    read_2 = str([hex(i) for i in out_2])
 
-        out_3 = pn532_3.read_passive_target(timeout=128)
-        read_3 = str([hex(i) for i in out_3])
+    out_3 = pn532_3.read_passive_target(timeout=128)
+    read_3 = str([hex(i) for i in out_3])
 
-        print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
+    print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
 
-        # BME280 sensor address (default address)
-        address = 0x76
+    # BME280 sensor address (default address)
+    address = 0x76
 
-        # Initialize I2C bus
-        bus = smbus2.SMBus(1)
+    # Initialize I2C bus
+    bus = smbus2.SMBus(1)
 
-        # Load calibration parameters
-        calibration_params = bme280.load_calibration_params(bus, address)
-        data = bme280.sample(bus, address, calibration_params)
+    # Load calibration parameters
+    calibration_params = bme280.load_calibration_params(bus, address)
+    data = bme280.sample(bus, address, calibration_params)
 
-        temperature_celsius = data.temperature
-        pressure = data.pressure
-        humidity = data.humidity
+    temperature_celsius = data.temperature
+    pressure = data.pressure
+    humidity = data.humidity
 
-        print("Temperature",temperature_celsius,"\nPressure",pressure, "\nhumidity",humidity)
-        time.sleep(3)
+    print("Temperature",temperature_celsius,"\nPressure",pressure, "\nhumidity",humidity)
+    time.sleep(60)
