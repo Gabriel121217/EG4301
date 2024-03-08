@@ -133,5 +133,5 @@ while True:
     else:
         stop()
         process_input(user_input)
-        sleep(2)
+        sleep(5)
 
