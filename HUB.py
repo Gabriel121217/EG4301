@@ -64,7 +64,6 @@ def nfc_scan():
             cart.append("Error: Cartridge Not")
         
     print(answer)
-    return(cart)
 
 def temp():
     # BME280 sensor address (default address)
