@@ -11,7 +11,6 @@ servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
 def lock(deg):
     servo.angle = deg
 
-
 while True:
     user_input = input("Enter degree")
     lock(user_input)
