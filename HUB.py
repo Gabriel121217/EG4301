@@ -19,9 +19,36 @@ from dotenv import load_dotenv
 load_dotenv()
 import boto3
 
+####################################################################################################################################################################################
+# Setting up and definitions
+####################################################################################################################################################################################
+
+#idk why but i need to define these
+reset_pin = DigitalInOut(board.D6)
+req_pin = DigitalInOut(board.D12)
+
+# Create I2C
+# bus as normal
+i2c = board.I2C()  # uses board.SCL and board.SDA
+
+# Create the TCA9548A object and give it the I2C bus
+tca = adafruit_tca9548a.TCA9548A(i2c)
+
+#GPIO things
+GPIO.setmode(GPIO.BCM)
+
+#Relay setup
+GPIO.setup(23, GPIO.OUT)
+GPIO.setup(24, GPIO.OUT)
+
+#servo setup
+
+servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
 
 
-
+####################################################################################################################################################################################
+# NFC SCAN THINGS
+####################################################################################################################################################################################
 
 #dictionary
 # cartridge = {
@@ -41,19 +68,6 @@ cartridge = {
     "e896ffd": "Cartridge C",
     "538f1234": "Cartridge C"
 }
-
-#idk why but i need to define these
-reset_pin = DigitalInOut(board.D6)
-req_pin = DigitalInOut(board.D12)
-#testtest
-
-# Create I2C
-# bus as normal
-i2c = board.I2C()  # uses board.SCL and board.SDA
-
-# Create the TCA9548A object and give it the I2C bus
-tca = adafruit_tca9548a.TCA9548A(i2c)
-
 #initialise i2c device
 pn532_1 = PN532_I2C(tca[0], debug=False, reset=reset_pin, req=req_pin)
 pn532_2 = PN532_I2C(tca[1], debug=False, reset=reset_pin, req=req_pin)
@@ -84,6 +98,10 @@ def nfc_scan():
     print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
         
 
+####################################################################################################################################################################################
+# Temperature
+####################################################################################################################################################################################
+
 def temp():
     # BME280 sensor address (default address)
     address = 0x76
@@ -100,6 +118,10 @@ def temp():
     humidity = data.humidity
 
     print("Temperature",temperature_celsius,"\nPressure",pressure, "\nhumidity",humidity)
+
+####################################################################################################################################################################################
+# Movement
+####################################################################################################################################################################################
 
 def moveup():
     import RPi.GPIO as GPIO
@@ -128,15 +150,19 @@ def stop():
     GPIO.output(24, 0)
     GPIO.cleanup()
 
-#servo
-servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
-
+####################################################################################################################################################################################
+# Locking / Unlocking
+####################################################################################################################################################################################
 
 def lock(deg):
     servo.angle = 80
 
 def unlock(deg):
     servo.angle = -90
+
+####################################################################################################################################################################################
+# Control Panel
+####################################################################################################################################################################################
 
 def process_input(action):
     if action == 'up':
