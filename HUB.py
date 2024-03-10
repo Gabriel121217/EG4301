@@ -44,7 +44,7 @@ GPIO.setup(24, GPIO.OUT)
 #servo setup
 
 servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
-
+servo.angle = -90 #default state is unlock
 
 ####################################################################################################################################################################################
 # NFC SCAN THINGS
