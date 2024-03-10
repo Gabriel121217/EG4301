@@ -24,13 +24,22 @@ import boto3
 
 
 #dictionary
+# cartridge = {
+#     "['0x60', '0xbb', '0xe9', '0x55']": "Cartridge A",
+#     "['0xfe', '0x43', '0x22', '0x1d']": "Cartridge A",
+#     "['0xa2', '0x4', '0xdc', '0x51']":"Cartridge B",
+#     "['0xee', '0xed', '0x65', '0x1d']": "Cartridge B",
+#     "['0xe8', '0x96', '0xff', '0xd']": "Cartridge C",
+#     "['0x53', '0x8f', '0x12', '0x34']": "Cartridge C"
+# }
+
 cartridge = {
-    "['0x60', '0xbb', '0xe9', '0x55']": "Cartridge A",
-    "['0xfe', '0x43', '0x22', '0x1d']": "Cartridge A",
-    "['0xa2', '0x4', '0xdc', '0x51']":"Cartridge B",
-    "['0xee', '0xed', '0x65', '0x1d']": "Cartridge B",
-    "['0xe8', '0x96', '0xff', '0xd']": "Cartridge C",
-    "['0x53', '0x8f', '0x12', '0x34']": "Cartridge C"
+    "60bbe955": "Cartridge A",
+    "fe43221d": "Cartridge A",
+    "a24dc51":"Cartridge B",
+    "eeed651d": "Cartridge B",
+    "e896ffd": "Cartridge C",
+    "538f1234": "Cartridge C"
 }
 
 #idk why but i need to define these
@@ -55,15 +64,22 @@ pn532_1.SAM_configuration()
 pn532_2.SAM_configuration()
 pn532_3.SAM_configuration()
 
+def hexa (hexa):
+    ans = ''
+    for i in hexa:
+        digits = i[2:]
+        ans += digits
+    return(ans)
+
 def nfc_scan():
     out_1 = pn532_1.read_passive_target(timeout=128)
-    read_1 = str([hex(i) for i in out_1])
+    read_1 = hexa([hex(i) for i in out_1])
 
     out_2 = pn532_2.read_passive_target(timeout=128)
-    read_2 = str([hex(i) for i in out_2])
+    read_2 = hexa([hex(i) for i in out_2])
 
     out_3 = pn532_3.read_passive_target(timeout=128)
-    read_3 = str([hex(i) for i in out_3])
+    read_3 = hexa([hex(i) for i in out_3])
 
     print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
         
@@ -112,7 +128,15 @@ def stop():
     GPIO.output(24, 0)
     GPIO.cleanup()
 
-    
+#servo
+servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
+
+
+def lock(deg):
+    servo.angle = 80
+
+def unlock(deg):
+    servo.angle = -90
 
 def process_input(action):
     if action == 'up':
@@ -125,9 +149,13 @@ def process_input(action):
         nfc_scan()
     elif action == 'temp':
         temp()
+    elif action == "lock":
+        lock()
+    elif action == "unlock":
+        unlock()
     
 while True:
-    user_input = input("Enter 'scan', 'temp', 'up', 'down', or 'stop': ").lower()
+    user_input = input("Enter 'scan', 'temp', 'up', 'down', 'lock', 'unlock' or 'stop': ").lower()
     if user_input == 'stop':
         stop()
     else:
