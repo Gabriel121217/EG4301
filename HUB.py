@@ -12,7 +12,7 @@ import smbus2
 import bme280
 import RPi.GPIO as GPIO
 import time
-from gpiozero import AngularServo
+from gpiozero import Servo
 from time import sleep
 
 from dotenv import load_dotenv
@@ -42,10 +42,8 @@ GPIO.setup(22, GPIO.OUT)
 GPIO.setup(23, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
 
-#servo PWM
-servo_pwm = GPIO.PWM(22, 50)  # GPIO pin 22, PWM frequency 50Hz
-servo_pwm.start(0)  # Start PWM with duty cycle 0 (neutral position)
-
+#servo setup
+servo = Servo(22)
 
 ####################################################################################################################################################################################
 # NFC SCAN THINGS
@@ -156,19 +154,10 @@ def stop():
 ####################################################################################################################################################################################
 
 def lock():
-    import RPi.GPIO as GPIO
-    GPIO.setmode(GPIO.BCM)
-    GPIO.setup(22, GPIO.OUT)
-    duty_cycle = (170 / 18) + 2  # Convert degrees to duty cycle
-    servo_pwm.ChangeDutyCycle(duty_cycle)
-    time.sleep(1)  # Adjust this delay as needed
-    servo_pwm.ChangeDutyCycle(0)  # Stop PWM
+    servo.value = 0.88
 
 def unlock():
-    duty_cycle = (0 / 18) + 2  # Convert degrees to duty cycle
-    servo_pwm.ChangeDutyCycle(duty_cycle)
-    time.sleep(1)  # Adjust this delay as needed
-    servo_pwm.ChangeDutyCycle(0)  # Stop PWM
+    servo.value = 0
 
 ####################################################################################################################################################################################
 # Control Panel
