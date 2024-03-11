@@ -41,18 +41,6 @@ GPIO.setmode(GPIO.BCM)
 GPIO.setup(23, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
 
-#servo setup
-
-servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
-servo.angle = -90 #default state is unlock
-sleep(10)
-servo.angle = 80
-sleep(10)
-servo.angle = -90 #default state is unlock
-sleep(10)
-servo.angle = 80
-sleep(10)
-servo.angle = -90
 
 ####################################################################################################################################################################################
 # NFC SCAN THINGS
@@ -165,12 +153,14 @@ def stop():
 def lock():
     GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
+    servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
     servo.angle = 80
 
 def unlock():
     GPIO.cleanup()
     GPIO.setmode(GPIO.BCM)
-    servo.angle = -90
+    servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
+    servo.angle = -90 
 
 ####################################################################################################################################################################################
 # Control Panel
@@ -193,6 +183,7 @@ def process_input(action):
         unlock()
     
 while True:
+    unlock()
     user_input = input("Enter 'scan', 'temp', 'up', 'down', 'lock', 'unlock' or 'stop': ").lower()
     if user_input == 'stop':
         stop()
