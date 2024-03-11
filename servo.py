@@ -4,10 +4,10 @@ from time import sleep
 servo = Servo(22)
 
 def lock():
-    servo.value = 0.88
+    servo.max()
 
 def unlock():
-    servo.value = 0
+    servo.min()
 
 for i in range(5):
     lock()
