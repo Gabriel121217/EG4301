@@ -37,9 +37,14 @@ tca = adafruit_tca9548a.TCA9548A(i2c)
 #GPIO things
 GPIO.setmode(GPIO.BCM)
 
-#Relay setup
+#GPIO setup
+GPIO.setup(22, GPIO.OUT)
 GPIO.setup(23, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
+
+#servo PWM
+servo_pwm = GPIO.PWM(22, 50)  # GPIO pin 22, PWM frequency 50Hz
+servo_pwm.start(0)  # Start PWM with duty cycle 0 (neutral position)
 
 
 ####################################################################################################################################################################################
@@ -151,15 +156,17 @@ def stop():
 ####################################################################################################################################################################################
 
 def lock():
-    GPIO.setmode(GPIO.BCM)
-    servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
-    servo.angle = 80
+    duty_cycle = (80 / 18) + 2  # Convert degrees to duty cycle
+    servo_pwm.ChangeDutyCycle(duty_cycle)
+    time.sleep(1)  # Adjust this delay as needed
+    servo_pwm.ChangeDutyCycle(0)  # Stop PWM
 
 def unlock():
-    GPIO.setmode(GPIO.BCM)
-    servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
-    servo.angle = -90 
-
+    duty_cycle = (-90 / 18) + 2  # Convert degrees to duty cycle
+    servo_pwm.ChangeDutyCycle(duty_cycle)
+    time.sleep(1)  # Adjust this delay as needed
+    servo_pwm.ChangeDutyCycle(0)  # Stop PWM
+    
 ####################################################################################################################################################################################
 # Control Panel
 ####################################################################################################################################################################################
