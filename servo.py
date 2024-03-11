@@ -5,7 +5,7 @@ import time
 
 
 #servo
-servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
+servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.0050)
 
 
 def lock(deg):
