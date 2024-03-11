@@ -5,9 +5,11 @@ servo = Servo(22)
 
 def lock():
     servo.max()
+    sleep(0.5)
 
 def unlock():
     servo.min()
+    sleep(0.5)
 
 for i in range(1):
     lock()
