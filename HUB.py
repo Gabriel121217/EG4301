@@ -158,6 +158,8 @@ def lock():
     sleep(0.5)
 
 def unlock():
+    GPIO.setmode(GPIO.BCM)
+    servo = Servo(22)
     servo.min()
     sleep(0.5)
 
