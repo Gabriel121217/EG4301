@@ -156,10 +156,12 @@ def stop():
 
 def lock():
     GPIO.setmode(GPIO.BCM)
+    servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
     servo.angle = 80
 
 def unlock():
     GPIO.setmode(GPIO.BCM)
+    servo = AngularServo(22, min_pulse_width=0.0006, max_pulse_width=0.00250)
     servo.angle = -90
 
 ####################################################################################################################################################################################
