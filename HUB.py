@@ -183,7 +183,6 @@ def process_input(action):
         unlock()
     
 while True:
-    unlock()
     user_input = input("Enter 'scan', 'temp', 'up', 'down', 'lock', 'unlock' or 'stop': ").lower()
     if user_input == 'stop':
         stop()
