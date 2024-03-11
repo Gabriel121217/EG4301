@@ -176,7 +176,8 @@ def stopmotion():
     GPIO.output(23, 0)
     GPIO.output(24, 0)
     GPIO.cleanup()
-    GPIO.setup(22, GPIO.OUT)
+    GPIO.setmode(GPIO.BCM)
+
 @sock.route('/Up')
 def Up(ws):
     print('up')
