@@ -10,9 +10,11 @@ def unlock():
     servo.min()
 
 for i in range(5):
-    servo.min()
+    lock()
     sleep(0.5)
-    servo.mid()
+    unlock()
     sleep(0.5)
-    servo.max()
+    lock()
+    sleep(0.5)
+    unlock()
     sleep(0.5)
