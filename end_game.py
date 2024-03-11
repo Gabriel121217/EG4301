@@ -208,9 +208,10 @@ def login(ws):
     message='Unlocking:Loh Wai Keong'
     unlock()
     moveup()
+    ws.send(message)
     sleep(10)
     stopmotion()
-    ws.send(message)
+    
     
 if __name__=='__main__':
     server = '192.168.79.92'
