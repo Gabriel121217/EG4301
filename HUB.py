@@ -145,6 +145,7 @@ def stop():
     GPIO.setup(24, GPIO.OUT)
     GPIO.output(23, 0)
     GPIO.output(24, 0)
+    GPIO.cleanup()
 
 
 ####################################################################################################################################################################################
@@ -153,6 +154,8 @@ def stop():
 servo = Servo(22)
 
 def lock():
+    GPIO.setmode(GPIO.BCM)
+    servo = Servo(22)
     servo.max()
     sleep(0.5)
 
