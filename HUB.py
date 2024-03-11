@@ -145,14 +145,10 @@ def stop():
     GPIO.setup(24, GPIO.OUT)
     GPIO.output(23, 0)
     GPIO.output(24, 0)
-    GPIO.cleanup()
 
 ####################################################################################################################################################################################
 # Locking / Unlocking
 ####################################################################################################################################################################################
-
-#servo setup
-servo = Servo(22)
 
 def lock():
     servo.max()
@@ -182,10 +178,12 @@ def process_input(action):
     elif action == "unlock":
         unlock()
     
+unlock()
 while True:
     user_input = input("Enter 'scan', 'temp', 'up', 'down', 'lock', 'unlock' or 'stop': ").lower()
     if user_input == 'stop':
         stop()
     else:
+        stop()
         process_input(user_input)
 
