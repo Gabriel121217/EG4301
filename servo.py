@@ -24,9 +24,9 @@ for i in range(1):
 
 def process_input(action):
     if action == "lock":
-        lock()
+        servo.max()
     elif action == "unlock":
-        unlock()
+        servo.min
     
 
 
