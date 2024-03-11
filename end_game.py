@@ -180,41 +180,57 @@ def stopmotion():
 
 @sock.route('/Up')
 def Up(ws):
-    print('up')
+    print('Moving Up...')
     moveup()
 
 @sock.route('/RFIDScan')
 def RFIDScan(ws):
-    print('scan')
+    print('Scanning...')
     message ='Scanning:' + str(nfc_scan())
     ws.send(message)
 
 @sock.route('/Down')
 def Down(ws):
-    print('down')
+    print('Moving Down...')
     message='Unlocking:Loh Wai Keong'
     movedown()
 
 @sock.route('/Stop')
 def Stop(ws):
-    print('stop')
+    print('Stopping...')
     message='Unlocking:Loh Wai Keong'
     stopmotion()    
     
     
 @sock.route('/Unlock')
 def login(ws):
-    print('login')
+    print('Unlocking...')
     message='Unlocking:Loh Wai Keong'
     unlock()
     moveup()
     ws.send(message)
     sleep(10)
     stopmotion()
-    
+
+@sock.route('/Lock')
+def login(ws):
+    print('Locking...')
+    message='Unlocking:Loh Wai Keong'
+    unlock()
+    movedown()
+    ws.send(message)
+    sleep(25)
+    stopmotion()
+
+@sock.route('/Temp')
+def login(ws):
+    print('Taking Temp...')
+    temp()
+
+
     
 if __name__=='__main__':
     server = '192.168.79.92'
-    print('server starting')
+    print('Server starting...')
     WSGIServer((server,4999),app).serve_forever()
     
