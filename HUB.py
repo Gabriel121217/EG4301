@@ -156,7 +156,7 @@ def stop():
 ####################################################################################################################################################################################
 
 def lock():
-    duty_cycle = (80 / 18) + 2  # Convert degrees to duty cycle
+    duty_cycle = (170 / 18) + 2  # Convert degrees to duty cycle
     servo_pwm.ChangeDutyCycle(duty_cycle)
     time.sleep(1)  # Adjust this delay as needed
     servo_pwm.ChangeDutyCycle(0)  # Stop PWM
@@ -166,7 +166,7 @@ def unlock():
     servo_pwm.ChangeDutyCycle(duty_cycle)
     time.sleep(1)  # Adjust this delay as needed
     servo_pwm.ChangeDutyCycle(0)  # Stop PWM
-    
+
 ####################################################################################################################################################################################
 # Control Panel
 ####################################################################################################################################################################################
