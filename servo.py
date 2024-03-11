@@ -9,7 +9,7 @@ def lock():
 def unlock():
     servo.min()
 
-for i in range(5):
+for i in range(1):
     lock()
     sleep(0.5)
     unlock()
@@ -27,7 +27,7 @@ def process_input(action):
         unlock()
     
 
-    
+
 while True:
     unlock()
     user_input = input("Enter  'lock', 'unlock': ").lower()
