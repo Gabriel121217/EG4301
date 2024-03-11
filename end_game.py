@@ -149,7 +149,13 @@ def temp():
     #pressure = data.pressure
     humidity = str((data.humidity//0.1)/10)
 
-    return("Temperature:",temperature_celsius, "Humidity:",humidity)
+    ans=''
+    ans+= "Temp:temp"
+    ans += temperature_celsius
+    ans+= "Humidity"
+    ans+= humidity
+
+    return ans
 
 ####################################################################################################################################################################################
 # Movement
@@ -223,9 +229,9 @@ def lock(ws):
     stopmotion()
 
 @sock.route('/TempScan')
-def temp(ws):
+def TempScan(ws):
     print('Taking Temp...')
-    temp()
+    ws.send(temp())
 
 
     
