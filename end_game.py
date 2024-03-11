@@ -213,7 +213,7 @@ def login(ws):
     stopmotion()
 
 @sock.route('/Lock')
-def login(ws):
+def lock(ws):
     print('Locking...')
     message='Unlocking:Loh Wai Keong'
     unlock()
@@ -223,7 +223,7 @@ def login(ws):
     stopmotion()
 
 @sock.route('/Temp')
-def login(ws):
+def temp(ws):
     print('Taking Temp...')
     temp()
 
