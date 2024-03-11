@@ -20,4 +20,13 @@ for i in range(5):
     sleep(0.5)
 
 
-lock()
+def process_input(action):
+    if action == "lock":
+        lock()
+    elif action == "unlock":
+        unlock()
+    
+while True:
+    unlock()
+    user_input = input("Enter  'lock', 'unlock': ").lower()
+    process_input(user_input)
