@@ -24,13 +24,12 @@ for i in range(1):
 
 def process_input(action):
     if action == "lock":
-        servo.max()
+        lock()
     elif action == "unlock":
-        servo.min
+        unlock()
     
 
 
 while True:
-    unlock()
     user_input = input("Enter  'lock', 'unlock': ").lower()
     process_input(user_input)
