@@ -18,3 +18,6 @@ for i in range(5):
     sleep(0.5)
     unlock()
     sleep(0.5)
+
+
+lock()
