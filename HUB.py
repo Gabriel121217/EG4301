@@ -156,6 +156,9 @@ def stop():
 ####################################################################################################################################################################################
 
 def lock():
+    import RPi.GPIO as GPIO
+    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(22, GPIO.OUT)
     duty_cycle = (170 / 18) + 2  # Convert degrees to duty cycle
     servo_pwm.ChangeDutyCycle(duty_cycle)
     time.sleep(1)  # Adjust this delay as needed
