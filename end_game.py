@@ -1,4 +1,12 @@
 from time import sleep
+from gevent import monkey
+import RPi.GPIO as GPIO
+from time import sleep
+monkey.patch_all()
+from gevent.pywsgi import WSGIServer
+from flask import Flask, render_template
+from flask_sock import Sock
+from time import sleep
 from py532lib.i2c import*
 from py532lib.frame import*
 from py532lib.constants import*
@@ -18,6 +26,7 @@ from time import sleep
 from dotenv import load_dotenv
 load_dotenv()
 import boto3
+
 
 ####################################################################################################################################################################################
 # Setting up and definitions
@@ -42,6 +51,10 @@ GPIO.setup(22, GPIO.OUT)
 GPIO.setup(23, GPIO.OUT)
 GPIO.setup(24, GPIO.OUT)
 
+app = Flask(__name__)
+app.config['SOCK_SERVER_OPTIONS'] = {'ping_interval': 25}
+
+sock=Sock(app)
 
 ####################################################################################################################################################################################
 # NFC SCAN THINGS
@@ -84,8 +97,8 @@ def hexa (hexa):
         ans += digits
     return(ans)
 
-
 def nfc_scan():
+    total = []
     out_1 = pn532_1.read_passive_target(timeout=128)
     read_1 = hexa([hex(i) for i in out_1])
 
@@ -95,8 +108,27 @@ def nfc_scan():
     out_3 = pn532_3.read_passive_target(timeout=128)
     read_3 = hexa([hex(i) for i in out_3])
 
+    total.append(read_1)
+    total.append(read_2)
+    total.append(read_3)
+    return(total)
+    
     print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
-        
+
+####################################################################################################################################################################################
+# Locking / Unlocking
+####################################################################################################################################################################################
+def lock():
+    GPIO.setmode(GPIO.BCM)
+    servo = Servo(22)
+    servo.max()
+    sleep(0.5)
+
+def unlock():
+    GPIO.setmode(GPIO.BCM)
+    servo = Servo(22)
+    servo.min()
+    sleep(0.5)
 
 ####################################################################################################################################################################################
 # Temperature
@@ -124,76 +156,63 @@ def temp():
 ####################################################################################################################################################################################
 
 def moveup():
-    import RPi.GPIO as GPIO
-    from time import sleep
-    stop()
+    stopmotion()
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(23, GPIO.OUT)
     GPIO.output(23, 1)
 
 def movedown():
-    import RPi.GPIO as GPIO
-    from time import sleep
-    stop()
+    stopmotion()
     GPIO.setwarnings(False)
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(24, GPIO.OUT)
     GPIO.output(24, 1)
 
-def stop():
-    import RPi.GPIO as GPIO
+def stopmotion():
     GPIO.setmode(GPIO.BCM)
     GPIO.setup(23, GPIO.OUT)
     GPIO.setup(24, GPIO.OUT)
     GPIO.output(23, 0)
     GPIO.output(24, 0)
     GPIO.cleanup()
-    GPIO.setmode(GPIO.BCM)
+    GPIO.setup(22, GPIO.out)
+@sock.route('/Up')
+def Up(ws):
+    print('up')
+    moveup()
 
+@sock.route('/RFIDScan')
+def RFIDScan(ws):
+    print('scan')
+    message ='Scanning:' + str(nfc_scan())
+    ws.send(message)
 
-####################################################################################################################################################################################
-# Locking / Unlocking
-####################################################################################################################################################################################
-def lock():
-    GPIO.setmode(GPIO.BCM)
-    servo = Servo(22)
-    servo.max()
-    sleep(0.5)
+@sock.route('/Down')
+def Down(ws):
+    print('down')
+    message='Unlocking:Loh Wai Keong'
+    movedown()
 
-def unlock():
-    GPIO.setmode(GPIO.BCM)
-    servo = Servo(22)
-    servo.min()
-    sleep(0.5)
-
-####################################################################################################################################################################################
-# Control Panel
-####################################################################################################################################################################################
-
-def process_input(action):
-    if action == 'up':
-        moveup()
-    elif action == 'down':
-        movedown()
-    elif action == 'stop':
-        stop()
-    elif action == 'scan':
-        nfc_scan()
-    elif action == 'temp':
-        temp()
-    elif action == "lock":
-        lock()
-    elif action == "unlock":
-        unlock()
-
-
-unlock() 
-while True:
-    user_input = input("Enter 'scan', 'temp', 'up', 'down', 'lock', 'unlock' or 'stop': ").lower()
-    if user_input == 'stop':
-        stop()
-    else:
-        stop()
-        process_input(user_input)
-
+@sock.route('/Stop')
+def Stop(ws):
+    print('stop')
+    message='Unlocking:Loh Wai Keong'
+    stopmotion()    
+    
+    
+@sock.route('/Unlock')
+def login(ws):
+    print('login')
+    message='Unlocking:Loh Wai Keong'
+    unlock()
+    moveup()
+    sleep(10)
+    stopmotion()
+    ws.send(message)
+    
+if __name__=='__main__':
+    server = '192.168.79.92'
+    print('server starting')
+    WSGIServer((server,4999),app).serve_forever()
+    

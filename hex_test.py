@@ -2,8 +2,12 @@ def hexa (hexa):
     ans = ''
     for i in hexa:
         digits = i[2:]
+        print(i)
+        print(len(i))
+        if len(i)<4:
+            digits+= "_"
         ans += digits
-    return(ans)
+    print(ans)
 
 cartridge = [
     ['0x60', '0xbb', '0xe9', '0x55'],
@@ -14,7 +18,4 @@ cartridge = [
     ['0x53', '0x8f', '0x12', '0x34']]
 
 
-for keys in cartridge:
-    hexa(keys)
-
-hexa(['0xfe', '0x43', '0x22', '0x1d'])
+hexa(['0xa2', '0x4', '0xdc', '0x51'])
