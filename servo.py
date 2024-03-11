@@ -26,6 +26,8 @@ def process_input(action):
     elif action == "unlock":
         unlock()
     
+
+    
 while True:
     unlock()
     user_input = input("Enter  'lock', 'unlock': ").lower()
