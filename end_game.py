@@ -145,11 +145,11 @@ def temp():
     calibration_params = bme280.load_calibration_params(bus, address)
     data = bme280.sample(bus, address, calibration_params)
 
-    temperature_celsius = data.temperature
-    pressure = data.pressure
-    humidity = data.humidity
+    temperature_celsius = str((data.temperature//0.1)/10)
+    #pressure = data.pressure
+    humidity = str((data.humidity//0.1)/10)
 
-    print("Temperature",temperature_celsius,"\nPressure",pressure, "\nhumidity",humidity)
+    return("Temperature:",temperature_celsius, "Humidity:",humidity)
 
 ####################################################################################################################################################################################
 # Movement
@@ -222,7 +222,7 @@ def lock(ws):
     sleep(25)
     stopmotion()
 
-@sock.route('/Temp')
+@sock.route('/TempScan')
 def temp(ws):
     print('Taking Temp...')
     temp()
