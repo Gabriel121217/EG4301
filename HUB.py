@@ -191,5 +191,6 @@ while True:
     if user_input == 'stop':
         stop()
     else:
+        stop()
         process_input(user_input)
 
