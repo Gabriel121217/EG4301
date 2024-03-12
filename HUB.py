@@ -66,7 +66,7 @@ cartridge = {
     "538f1234": "Cartridge C"
 }
 #initialise i2c device
-#pn532_1 = PN532_I2C(tca[0], debug=False, reset=reset_pin, req=req_pin)
+pn532_1 = PN532_I2C(tca[0], debug=False, reset=reset_pin, req=req_pin)
 pn532_2 = PN532_I2C(tca[1], debug=False, reset=reset_pin, req=req_pin)
 pn532_3 = PN532_I2C(tca[2], debug=False, reset=reset_pin, req=req_pin)
 
