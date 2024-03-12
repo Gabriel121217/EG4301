@@ -66,12 +66,12 @@ cartridge = {
     "538f1234": "Cartridge C"
 }
 #initialise i2c device
-#pn532_1 = PN532_I2C(tca[0], debug=False, reset=reset_pin, req=req_pin)
+pn532_1 = PN532_I2C(tca[0], debug=False, reset=reset_pin, req=req_pin)
 pn532_2 = PN532_I2C(tca[1], debug=False, reset=reset_pin, req=req_pin)
 pn532_3 = PN532_I2C(tca[2], debug=False, reset=reset_pin, req=req_pin)
 
 #makes pn532 able to read stuff
-#pn532_1.SAM_configuration()
+pn532_1.SAM_configuration()
 pn532_2.SAM_configuration()
 pn532_3.SAM_configuration()
 
@@ -86,8 +86,8 @@ def hexa (hexa):
 
 
 def nfc_scan():
-    #out_1 = pn532_1.read_passive_target(timeout=128)
-    #read_1 = hexa([hex(i) for i in out_1])
+    out_1 = pn532_1.read_passive_target(timeout=128)
+    read_1 = hexa([hex(i) for i in out_1])
 
     out_2 = pn532_2.read_passive_target(timeout=128)
     read_2 = hexa([hex(i) for i in out_2])
@@ -95,7 +95,7 @@ def nfc_scan():
     out_3 = pn532_3.read_passive_target(timeout=128)
     read_3 = hexa([hex(i) for i in out_3])
 
-    print('Bay 1','\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
+    print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
         
 
 ####################################################################################################################################################################################
