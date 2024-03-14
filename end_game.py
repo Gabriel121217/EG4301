@@ -60,60 +60,60 @@ sock=Sock(app)
 # NFC SCAN THINGS
 ####################################################################################################################################################################################
 
-# #dictionary
-# # cartridge = {
-# #     "['0x60', '0xbb', '0xe9', '0x55']": "Cartridge A",
-# #     "['0xfe', '0x43', '0x22', '0x1d']": "Cartridge A",
-# #     "['0xa2', '0x4', '0xdc', '0x51']":"Cartridge B",
-# #     "['0xee', '0xed', '0x65', '0x1d']": "Cartridge B",
-# #     "['0xe8', '0x96', '0xff', '0xd']": "Cartridge C",
-# #     "['0x53', '0x8f', '0x12', '0x34']": "Cartridge C"
-# # }
-
+#dictionary
 # cartridge = {
-#     "60bbe955": "Cartridge A",
-#     "fe43221d": "Cartridge A",
-#     "a24dc51":"Cartridge B",
-#     "eeed651d": "Cartridge B",
-#     "e896ffd": "Cartridge C",
-#     "538f1234": "Cartridge C"
+#     "['0x60', '0xbb', '0xe9', '0x55']": "Cartridge A",
+#     "['0xfe', '0x43', '0x22', '0x1d']": "Cartridge A",
+#     "['0xa2', '0x4', '0xdc', '0x51']":"Cartridge B",
+#     "['0xee', '0xed', '0x65', '0x1d']": "Cartridge B",
+#     "['0xe8', '0x96', '0xff', '0xd']": "Cartridge C",
+#     "['0x53', '0x8f', '0x12', '0x34']": "Cartridge C"
 # }
-# #initialise i2c device
-# pn532_1 = PN532_I2C(tca[0], debug=False, reset=reset_pin, req=req_pin)
-# pn532_2 = PN532_I2C(tca[1], debug=False, reset=reset_pin, req=req_pin)
-# pn532_3 = PN532_I2C(tca[2], debug=False, reset=reset_pin, req=req_pin)
 
-# #makes pn532 able to read stuff
-# pn532_1.SAM_configuration()
-# pn532_2.SAM_configuration()
-# pn532_3.SAM_configuration()
+cartridge = {
+    "60bbe955": "Cartridge A",
+    "fe43221d": "Cartridge A",
+    "a24dc51":"Cartridge B",
+    "eeed651d": "Cartridge B",
+    "e896ffd": "Cartridge C",
+    "538f1234": "Cartridge C"
+}
+#initialise i2c device
+pn532_1 = PN532_I2C(tca[0], debug=False, reset=reset_pin, req=req_pin)
+pn532_2 = PN532_I2C(tca[1], debug=False, reset=reset_pin, req=req_pin)
+pn532_3 = PN532_I2C(tca[2], debug=False, reset=reset_pin, req=req_pin)
 
-# def hexa (hexa):
-#     ans = ''
-#     for i in hexa:
-#         digits = i[2:]
-#         if len(i)<4:
-#             digits+= "_"
-#         ans += digits
-#     return(ans)
+#makes pn532 able to read stuff
+pn532_1.SAM_configuration()
+pn532_2.SAM_configuration()
+pn532_3.SAM_configuration()
 
-# def nfc_scan():
-#     total = []
-#     out_1 = pn532_1.read_passive_target(timeout=128)
-#     read_1 = hexa([hex(i) for i in out_1])
+def hexa (hexa):
+    ans = ''
+    for i in hexa:
+        digits = i[2:]
+        if len(i)<4:
+            digits+= "_"
+        ans += digits
+    return(ans)
 
-#     out_2 = pn532_2.read_passive_target(timeout=128)
-#     read_2 = hexa([hex(i) for i in out_2])
+def nfc_scan():
+    total = []
+    out_1 = pn532_1.read_passive_target(timeout=128)
+    read_1 = hexa([hex(i) for i in out_1])
 
-#     out_3 = pn532_3.read_passive_target(timeout=128)
-#     read_3 = hexa([hex(i) for i in out_3])
+    out_2 = pn532_2.read_passive_target(timeout=128)
+    read_2 = hexa([hex(i) for i in out_2])
 
-#     total.append(read_1)
-#     total.append(read_2)
-#     total.append(read_3)
-#     return(total)
+    out_3 = pn532_3.read_passive_target(timeout=128)
+    read_3 = hexa([hex(i) for i in out_3])
+
+    total.append(read_1)
+    total.append(read_2)
+    total.append(read_3)
+    return(total)
     
-#     print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
+    print('Bay 1', cartridge[read_1],'\nBay 2', cartridge[read_2],'\nBay 3', cartridge[read_3])
 
 ####################################################################################################################################################################################
 # Locking / Unlocking
@@ -189,11 +189,11 @@ def Up(ws):
     print('Moving Up...')
     moveup()
 
-# @sock.route('/RFIDScan')
-# def RFIDScan(ws):
-#     print('Scanning...')
-#     message ='Scanning:' + str(nfc_scan())
-#     ws.send(message)
+@sock.route('/RFIDScan')
+def RFIDScan(ws):
+    print('Scanning...')
+    message ='Scanning:' + str(nfc_scan())
+    ws.send(message)
 
 @sock.route('/Down')
 def Down(ws):
