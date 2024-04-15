@@ -221,10 +221,8 @@ def login(ws):
 @sock.route('/Lock')
 def lock(ws):
     print('Locking...')
-    message='Unlocking:Loh Wai Keong'
     lock()
     movedown()
-    ws.send(message)
     sleep(25)
     stopmotion()
 
