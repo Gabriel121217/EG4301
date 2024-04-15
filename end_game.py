@@ -235,7 +235,7 @@ def TempScan(ws):
 
     
 if __name__=='__main__':
-    server = '192.168.142.92'
+    server = '192.168.19.216'
     print('Server starting...')
     WSGIServer((server,4999),app).serve_forever()
     
