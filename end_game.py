@@ -223,6 +223,7 @@ def lock(ws):
     print('Locking...')
     message='Unlocking:Loh Wai Keong'
     movedown()
+    lock()
     ws.send(message)
     sleep(25)
     stopmotion()
