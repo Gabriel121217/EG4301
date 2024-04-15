@@ -222,8 +222,8 @@ def login(ws):
 def lock(ws):
     print('Locking...')
     message='Unlocking:Loh Wai Keong'
-    movedown()
     lock()
+    movedown()
     ws.send(message)
     sleep(25)
     stopmotion()
