@@ -219,7 +219,7 @@ def login(ws):
     stopmotion()
 
 @sock.route('/Lock')
-def lock(ws):
+def lockfn(ws):
     print('Locking...')
     lock()
     movedown()
